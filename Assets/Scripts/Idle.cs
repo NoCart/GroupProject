@@ -1,18 +1,29 @@
+using NUnit.Framework.Interfaces;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Idle : PlayerState, IState
+public class IdleState : PlayerState, IState
 {
 
-    void Enter()
+    private float horizontalInput;
+    public void Enter()
     {
         rb.linearVelocity = Vector2.zero;
     }
-
-    private void StateUpdate()
+    public void OnRun(InputValue value)
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        horizontalInput = value.Get<float>();
+    }
+    public void StateUpdate()
+    {
+        if (horizontalInput != 0)
         {
-            //stateMachine.TransitionTo(run)
+            stateMachine.TransitionTo(GetComponent<RunState>());
+        }
+        if (!IsOnFloor() || jumpPressed)
+        {
+            stateMachine.TransitionTo(GetComponent<AirState>());
+            return;
         }
     }
 }

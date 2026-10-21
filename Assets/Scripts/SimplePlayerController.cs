@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -29,14 +30,14 @@ public class SimplePlayerController : MonoBehaviour
         input = GetComponent<PlayerInput>();
     }
 
-    public void onHorizontalInput(InputAction.CallbackContext context)
+    public void OnRun(InputValue value)
     {
-        horizontalInput = context.ReadValue<float>();
+        horizontalInput = value.Get<float>();
     }
 
-    public void onJump(InputAction.CallbackContext context)
+    public void OnJump(InputValue value)
     {
-        jumpPressed = context.performed;
+        jumpPressed = Convert.ToBoolean(value.Get<float>());
     }
 
     void FixedUpdate()

@@ -1,19 +1,29 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StateMachine : MonoBehaviour
 {
 
-    public IState initialState;
+
+    public enum enumState { Idle, Run };
+    public enumState InitialState;
+
+    public Text debugText;
 
     IState state;
     void Start()
     {
-        state = initialState;
+        switch (InitialState)
+        {
+            case enumState.Idle: { state = GetComponent<IdleState>(); break; }
+        }
+        print(state);
         state.Enter();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         state.StateUpdate();
     }
@@ -23,10 +33,11 @@ public class StateMachine : MonoBehaviour
         state.StateFixedUpdate();
     }
 
-    void TransitionTo(IState newState)
+    public void TransitionTo(IState newState)
     {
         state.Exit();
         state = newState;
         state.Enter();
+        debugText.text = state.ToString();
     }
 }
