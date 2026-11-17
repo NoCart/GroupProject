@@ -1,18 +1,18 @@
 using NUnit.Framework.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class IdleState : PlayerState, IState
 {
-
-    private float horizontalInput;
     public void Enter()
     {
+        if (IsOnSafeGround())
+        {
+            player.lastSafePosition = gameObject.transform.position;
+        }
+        animator.Play("Idle");
         rb.linearVelocity = Vector2.zero;
-    }
-    public void OnRun(InputValue value)
-    {
-        horizontalInput = value.Get<float>();
     }
     public void StateUpdate()
     {
