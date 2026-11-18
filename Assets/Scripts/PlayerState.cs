@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,7 +32,7 @@ public class PlayerState : MonoBehaviour, IState
     public bool IsOnFloor()
     {
         
-        RaycastHit2D hit = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y), 0.25f, -Vector2.up, 0.75f, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y), 0.25f, -Vector2.up, 0.8f, LayerMask.GetMask("Ground"));
         Debug.DrawLine(transform.position, hit.point, Color.red);
         return hit;
     }

@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private StateMachine stateMachine;
 
+    
+
     private int health = 0;
 
     private void Start()
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
         healthComponent = GetComponent<HealthComponent>();
         rb = GetComponent<Rigidbody2D>();
         healthComponent.onTakeDamage += onTakeDamage;
+        GameManager.freezePlayer += freeze;
     }
 
     public void onTakeDamage()
@@ -33,4 +36,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void freeze()
+    {
+        stateMachine.SetFrozen(true);
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.freezePlayer -= freeze;
+    }
 }

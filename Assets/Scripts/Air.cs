@@ -76,7 +76,7 @@ public class AirState : PlayerState, IState
         rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, horizontalInput * airSpeed, airAcceleration * Time.deltaTime);
 
 
-        // If the player velocity y goes from up to down trigger floating
+        // If the player velocity y goes from up to down trigger floatingx
         if (rb.linearVelocityY - UpGravity * Time.deltaTime < 0 && startedFloating == false)
         {
             startedFloating = true;

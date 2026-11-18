@@ -11,6 +11,10 @@ public class StateMachine : MonoBehaviour
 
     public Text debugText;
 
+    private bool frozen = false;
+
+    private Vector2 lastVelocity;
+
     IState state;
     void Start()
     {
@@ -25,11 +29,13 @@ public class StateMachine : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (frozen) { return; }
         state.StateUpdate();
     }
 
     private void FixedUpdate()
     {
+        if (frozen) { return; }
         state.StateFixedUpdate();
     }
 
@@ -39,5 +45,22 @@ public class StateMachine : MonoBehaviour
         state = newState;
         state.Enter();
         debugText.text = state.ToString();
+    }
+
+    public void SetFrozen(bool value)
+    {
+        frozen = value;
+
+        if (frozen == true)
+        {
+            lastVelocity = GetComponent<Rigidbody2D>().linearVelocity;
+            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            GetComponent<Animator>().speed = 0.0f;
+        }
+        else
+        {
+            GetComponent<Animator>().speed = 1.0f;
+            GetComponent<Rigidbody2D>().linearVelocity = lastVelocity;
+        }
     }
 }

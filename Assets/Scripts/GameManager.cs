@@ -8,7 +8,10 @@ public class GameManager
 {
     public static UnityAction onGameOver;
     public static UnityAction updateBackgroundMusic;
+    public static UnityAction onGameWin;
     public static UnityAction updateScore;
+    public static UnityAction freezePlayer;
+
     private static GameManager _instance;
 
     public static int score = 0;

@@ -7,4 +7,5 @@ public class DeathState : PlayerState, IState
         rb.linearVelocity = Vector3.zero;
     }
     
+    
 }
